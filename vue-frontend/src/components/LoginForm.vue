@@ -12,6 +12,7 @@
       </div>
       <button type="submit">Login</button>
     </form>
+    <p class="mt-3">Don't have an account? <router-link to="/register" class="link-sign">Register here!</router-link></p>
   </div>
 </template>
 
@@ -79,5 +80,14 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.link-sign {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link-sign:hover {
+  text-decoration: underline;
 }
 </style>
