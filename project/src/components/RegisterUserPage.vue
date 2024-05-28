@@ -26,6 +26,43 @@
     </div>
   </template>
   
+  <script>
+  import axios from 'axios'
+  
+  export default {
+    data() {
+      return {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        errorMessage: ''
+      };
+    },
+    methods: {
+      async createAccount() {
+        if (this.password !== this.confirmPassword) {
+          this.errorMessage = 'Passwords do not match';
+          return;
+        }
+  
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/api/register', {
+            name: this.name,
+            email: this.email,
+            password: this.password
+          });
+          console.log('Account created:', response.data);
+          // Handle successful account creation, e.g., redirect to login page
+        } catch (error) {
+          console.error('Error creating account:', error);
+          this.errorMessage = 'Error creating account';
+          // Handle error, e.g., display error message to the user
+        }
+      }
+    }
+  };
+  </script>
   
   <style scoped>
   /* Add some basic styling */
