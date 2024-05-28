@@ -10,10 +10,10 @@ class AuthenticateUser
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check()) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        if (Auth::check()) {
+            return $next($request);
         }
 
-        return $next($request);
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
 }
