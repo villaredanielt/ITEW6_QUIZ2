@@ -2,54 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-        ]);
-
-        return response()->json(['message' => 'User registered successfully']);
-    }
-
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
+        $data = $request->validate([
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+        if (!Auth::attempt($data)) {
+            return response()->json(['message' => 'wrong credentials'], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user = User::where('email', $data['email'])->firstOrFail();
+        $token = $user->createToken('user')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token], 200);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
+        $user->tokens()->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Logged out'], 200);
     }
 }
