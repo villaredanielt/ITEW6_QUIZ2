@@ -3,53 +3,79 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Products;
 
-class ProductController extends Controller
+class ProductsController extends Controller
 {
     public function index()
     {
-        return Product::all();
+        $products = Products::all();
+
+        return response()->json([
+            'products' => $products,
+            'method' => 'GET'
+        ], 200);
+    }
+
+    public function getProductsById(Request $request)
+    {
+        $userId = $request->query('user_id');
+        $products = Products::where('user_id', $userId)->get();
+
+        return response()->json([
+            'products' => $products,
+            'method' => 'GET'
+        ], 200);
     }
 
     public function show($id)
     {
-        return Product::findOrFail($id);
+        $product = Products::findOrFail($id);
+
+        return response()->json([
+            'product' => $product,
+            'method' => 'GET'
+        ], 200);
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
+        $product = Products::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'stocks' => $request->input('stocks'),
+            'user_id' => $request->input('user_id'),
+            'price' => $request->input('price')
         ]);
 
-        return Product::create($validatedData);
+        return response()->json([
+            'product' => $product,
+            'method' => 'POST'
+        ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
-
-        $validatedData = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'price' => 'sometimes|numeric',
-            'stock' => 'sometimes|integer',
+        $product = Products::where('id', $id)->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'stocks' => $request->input('stocks'),
+            'price' => $request->input('price')
         ]);
 
-        $product->update($validatedData);
-
-        return $product;
+        return response()->json([
+            'updated_rows' => $product,
+            'method' => 'PUT'
+        ], 200);
     }
 
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        $product = Products::where('id', $id)->delete();
 
-        return response()->json(['message' => 'Product deleted successfully']);
+        return response()->json([
+            'deleted_rows' => $product,
+            'method' => 'DELETE'
+        ], 200);
     }
 }
