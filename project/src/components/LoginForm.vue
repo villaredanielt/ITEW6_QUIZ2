@@ -12,7 +12,7 @@
       </div>
       <button type="submit">Login</button>
     </form>
-    <p class="mt-3">Don't have an account? <router-link to="/register" class="link-sign">Register here!</router-link></p>
+    <p class="mt-3">Don't have an account? <router-link to="/register" class="link-sign">Sign Up Here!</router-link></p>
   </div>
 </template>
 

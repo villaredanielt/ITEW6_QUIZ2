@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="header">
-      <h1 style="color: #2196F3;">BetaMart</h1>
+      <h1 style="color: #2196F3;">TrendShop</h1>
       <button class="add-button" @click="openModal('add')">Add Item</button>
     </header>
     
@@ -49,9 +49,14 @@ export default {
   name: 'HomePage',
   setup() {
     const items = ref([
-      { id: 1, name: 'Item 1', price: 10, description: 'Description 1' },
-      { id: 2, name: 'Item 2', price: 20, description: 'Description 2' },
-      { id: 3, name: 'Item 3', price: 30, description: 'Description 3' },
+      { id: 1, name: 'Jogger Pants', price: 1000, description: 'Black and Gray Color' },
+      { id: 2, name: 'Skirts', price: 500, description: 'Small-Large/Denim Style' },
+      { id: 3, name: 'Polo Shirts', price: 3500, description: 'Unisex/ Black and Brown Color' },
+      { id: 4, name: 'CropTops', price: 500, description: 'Fit to Small-Medium' },
+      { id: 5, name: 'Tshirts', price: 1000, description: 'Small-Large/ Black Color' },
+      { id: 6, name: 'Shorts', price: 500, description: 'Men Shorts/ Denim' },
+      { id: 7, name: 'Hoodie', price: 3000, description: 'Oversized Hoodie' },
+      { id: 8, name: 'Dress', price: 5000, description: 'Classy Dress/ White and Black Color' }
     ]);
 
     const isModalOpen = ref(false);
