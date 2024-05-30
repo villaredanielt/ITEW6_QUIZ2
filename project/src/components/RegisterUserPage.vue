@@ -15,9 +15,44 @@
         <input type="password" id="password" v-model="password" required />
       </div>
       <button type="submit">Create Account</button>
+  
+      <p v-if="accountCreated" class="success-message">Account successfully created!</p>
     </form>
   </div>
 </template>
+
+<script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default {
+  name: 'RegistrationForm',
+  setup() {
+    const name = ref('');
+    const email = ref('');
+    const password = ref('');
+    const router = useRouter();
+    const accountCreated = ref(false); // Ref for tracking account creation status
+
+    const createAccount = () => {
+      setTimeout(() => {
+        accountCreated.value = true;
+        setTimeout(() => {
+          router.push('/login');
+        }, 3000); 
+      }, 2000); 
+    };
+
+    return {
+      name,
+      email,
+      password,
+      createAccount,
+      accountCreated 
+    };
+  }
+};
+</script>
 
 <style scoped>
 .registration-form {
@@ -61,11 +96,16 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 
 button:hover {
   background-color: #1976D2;
+}
+
+.success-message {
+  color: #4CAF50; 
+  text-align: center;
 }
 
 @media (max-width: 768px) {

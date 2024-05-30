@@ -6,7 +6,8 @@ import Home from '../components/HomePage.vue';
 const routes = [
   { path: '/', component: LoginForm },
   { path: '/register', component: RegisterUserPage },
-  { path: '/home', component: Home }
+  { path: '/home', component: Home },
+  { path: '/login', component: LoginForm }
 ];
 
 const router = createRouter({
