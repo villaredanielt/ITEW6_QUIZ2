@@ -17,5 +17,8 @@ class Product extends Model
         'stock',
     ];
 
-    // Additional methods or relationships can be defined here
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
