@@ -26,7 +26,7 @@
   padding: 20px;
   background-color: #f5f5f5;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
@@ -46,7 +46,7 @@ label {
 }
 
 input {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
